@@ -70,7 +70,7 @@ public class EncryptActivity extends Activity {
         String str = editText1.getText().toString();
         String cipher = "";
         try {
-            cipher = Encryption.encrypt(password, str);
+            cipher = Encryption.encrypt(password, MainActivity.version+str);
         } catch (Exception ex) {
             Toast.makeText(this, "Could not encrypt text: " + ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -82,17 +82,18 @@ public class EncryptActivity extends Activity {
         String str = editText1.getText().toString();
         String plain = "";
         try {
-
             plain = Encryption.decrypt(password, str);
-
         } catch (Exception ex) {
             Toast.makeText(this, "Unable to decipher text.", Toast.LENGTH_SHORT).show();
         }
-
-        editText2.setText(plain);
+        if (plain.contains(MainActivity.version)) {
+            plain = plain.substring(6);
+            editText2.setText(plain);
+        }
     }
 
     public void buttonReplaceClick(View v) {
+        editText2Click(v);
         exitWithResult(editText2.getText().toString());
     }
 
