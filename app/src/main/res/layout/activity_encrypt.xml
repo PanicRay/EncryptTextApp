@@ -24,6 +24,7 @@
                 android:checked="false"
                 android:fontFamily="sans-serif"
                 android:onClick="buttonOnDefault"
+                android:text="用默认密码ver1.0"
                 android:textAlignment="center" />
 
 

@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
-        useDefault.setText("用默认密码" +version);
 
         Intent intent = new Intent(this, EncryptActivity.class);
         startActivity(intent);
