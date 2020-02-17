@@ -21,7 +21,7 @@
 
         <activity
             android:name=".QEncryptActivity"
-            android:label="Encrypt"
+            android:label="快速加密"
             android:theme="@style/Theme.AppCompat.Dialog"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -36,7 +36,7 @@
 
         <activity
             android:name=".QDecryptActivity"
-            android:label="Decrypt"
+            android:label="快速解密"
             android:theme="@style/Theme.AppCompat.Dialog"
             android:screenOrientation="portrait">
             <intent-filter>
