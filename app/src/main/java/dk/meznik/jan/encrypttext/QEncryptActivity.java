@@ -14,11 +14,10 @@ public class QEncryptActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getIntent().getAction().equals(Intent.ACTION_PROCESS_TEXT)) {
-            String password = "6370gP5J99521VM784Gm0c1dERVy6pe8M2aC59P3zHf7R2804IQm5S49lhK2Y46k";
             CharSequence str = getIntent().getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT);
             String cipher = "";
             try {
-                cipher = Encryption.encrypt(password, str.toString());
+                cipher = Encryption.encryptDefault(MainActivity.version+str.toString());
             } catch (Exception ex) {
                 Toast.makeText(this, "Could not encrypt text: " + ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }

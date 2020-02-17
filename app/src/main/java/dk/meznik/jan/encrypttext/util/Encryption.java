@@ -29,8 +29,8 @@ public class Encryption {
     private static final String ENCODING = "UTF-8";
 
     private static final String HASH_ALGORITHM = "SHA-256";
-    private static final String SALT = "7938zQ2B1ZC7IF5duG49Jx02x29491t6921805H5ppN43IT9Ti6l3GAJH72B722M";
-    private static final String SALT2 = "MfoM95KRP4F7mb4vPAyn9yBZRP16UHOhHlSrnC9IEOtJHzjwyZrTCbi3lFhiaSCB";
+    private static final String SALT = "fxeetcMuOCUhWwGlAcdtirz7LN4jwwFVJTNA2ZIRp3SfP360kQRAk9OgW2c8Ax9T";
+    private static final String SALT2 = "mZwv5Anfv5TRj6JiKaRi1STMr9jHH83A5aRa9mF195ComRqWv2hC0SgWIUB7JxhP";
 
     private static final byte[] ivBytes = {0x42, 0x59, (byte)0xAF, 0x51, (byte)0xFF, (byte)0xB3,
             0x02, 0x68, 0x62, (byte)0xCE,(byte) 0xDA, 0x11, 0x00, (byte)0xE9, 0x44, 0x01};

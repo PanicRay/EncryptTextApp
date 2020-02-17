@@ -28,7 +28,7 @@ public class EncryptActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encrypt);
 
-        editTextPassword = (EditText)findViewById(R.id.switch2);
+        editTextPassword = (EditText)findViewById(R.id.editTextPassword);
         editText1 = (EditText)findViewById(R.id.editText1);
         editText2 = (EditText)findViewById(R.id.editText2);
         buttonEncrypt = (Button)findViewById(R.id.buttonEncrypt);
@@ -104,7 +104,7 @@ public class EncryptActivity extends Activity {
             Toast.makeText(this, "Unable to decipher text.", Toast.LENGTH_SHORT).show();
         }
         if (plain.contains(MainActivity.version)) {
-            plain = plain.substring(6);
+            plain = plain.substring(MainActivity.version.length());
             editText2.setText(plain);
         }
     }

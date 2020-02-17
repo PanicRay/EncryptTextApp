@@ -16,26 +16,35 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <Switch
+                android:id="@+id/switch2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:checked="false"
+                android:fontFamily="sans-serif"
+                android:onClick="buttonOnDefault"
+                android:textAlignment="center" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/editTextPassword"
                 android:layout_width="0dp"
-                android:layout_weight="7"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:layout_weight="7"
+                android:gravity="center"
+                android:hint="自定义密码"
                 android:inputType="textPassword"
                 android:textColor="#dddddd"
-                android:gravity="center"
-                android:textColorHint="#dddddd"
-                />
+                android:textColorHint="#dddddd" />
 
-            <Switch
-                android:id="@+id/switch2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:checked="false"
-                android:onClick="buttonOnDefault"
-                android:text="Switch" />
+
             <!--
             <ImageButton
                 android:id="@+id/imageButtonHelp"
@@ -66,27 +75,26 @@
             <Button
                 android:id="@+id/buttonEncrypt"
                 android:layout_width="1dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Encrypt"
-                android:onClick="buttonEncryptClick"/>
+                android:layout_weight="1"
+                android:onClick="buttonEncryptClick"
+                android:text="加密" />
 
             <Button
                 android:id="@+id/buttonDecrypt"
                 android:layout_width="1dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Decrypt"
-                android:onClick="buttonDecryptClick"/>
+                android:layout_weight="1"
+                android:onClick="buttonDecryptClick"
+                android:text="解密" />
 
             <Button
                 android:id="@+id/buttonReplace"
                 android:layout_width="1dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Replace"
+                android:layout_weight="1"
                 android:onClick="buttonReplaceClick"
-                />
+                android:text="复制替换" />
 
         </LinearLayout>
 

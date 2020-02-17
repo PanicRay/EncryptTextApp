@@ -14,19 +14,24 @@ public class QDecryptActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getIntent().getAction().equals(Intent.ACTION_PROCESS_TEXT)) {
-            String password = "6370gP5J99521VM784Gm0c1dERVy6pe8M2aC59P3zHf7R2804IQm5S49lhK2Y46k";
             ClipboardManager clipboardManager = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
             CharSequence str = getIntent().getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT);
-            String cipher = "";
+            String plain = "";
             try {
-                cipher = Encryption.decrypt(password, str.toString());
+                plain = Encryption.decryptDefault(str.toString());
             } catch (Exception ex) {
                 Toast.makeText(this, "Could not encrypt text: " + ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
-            ClipData clipData = ClipData.newPlainText("Text",cipher );
+            if (plain.contains(MainActivity.version)) {
+                plain = plain.substring(MainActivity.version.length());
+            }
+            else {
+                plain = "";
+            }
+            ClipData clipData = ClipData.newPlainText("Text",plain );
             clipboardManager.setPrimaryClip(clipData);
             Toast.makeText(this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
-            exitWithResult(cipher);
+            exitWithResult(plain);
         }
     }
     public void exitWithResult(String data) {
