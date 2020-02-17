@@ -1,12 +1,22 @@
 package dk.meznik.jan.encrypttext.util;
 
+import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -19,7 +29,8 @@ public class Encryption {
     private static final String ENCODING = "UTF-8";
 
     private static final String HASH_ALGORITHM = "SHA-256";
-    private static final String SALT = "d68a1c8a0a8b8710f7c771065165867fc8e73b50ee6809a7e9f53873b38e3e0d";
+    private static final String SALT = "7938zQ2B1ZC7IF5duG49Jx02x29491t6921805H5ppN43IT9Ti6l3GAJH72B722M";
+    private static final String SALT2 = "MfoM95KRP4F7mb4vPAyn9yBZRP16UHOhHlSrnC9IEOtJHzjwyZrTCbi3lFhiaSCB";
 
     private static final byte[] ivBytes = {0x42, 0x59, (byte)0xAF, 0x51, (byte)0xFF, (byte)0xB3,
             0x02, 0x68, 0x62, (byte)0xCE,(byte) 0xDA, 0x11, 0x00, (byte)0xE9, 0x44, 0x01};
@@ -42,6 +53,54 @@ public class Encryption {
         return new SecretKeySpec(key, "AES");
     }
 
+    public boolean isExternalStorageWritable() {
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            Log.i("State", "Yes, it is writable!");
+            return true;
+        }
+        return false;
+    }
+
+    public String[] readPassbook(String fileName) {
+        if (isExternalStorageWritable()) {
+            File textFile = new File(Environment.getExternalStorageDirectory(), fileName.getText().toString());
+            byte[] data = new byte[10240];
+            String passcode = "";
+            try {
+                BufferedInputStream buf = new BufferedInputStream(new FileInputStream(textFile));
+                buf.read(data, 0, data.length);
+                buf.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                passcode = decrypt(SALT2, data.toString());
+            } catch (Exception e) {
+                Toast.makeText(this, "Could not encrypt text: " + ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+            return passcode.split("\n");
+        }
+        return null;
+    }
+
+    public void writePassbook(String fileName, String [] passbook, String password){
+        if (isExternalStorageWritable()) {
+            File textFile = new File(Environment.getExternalStorageDirectory(), fileName);
+            try {
+                FileOutputStream fos = new FileOutputStream(textFile);
+                for (String i : passbook) {
+                    fos.write(encrypt(SALT2, i.getBytes()));
+                }
+                fos.write()
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public static String encrypt(final String password, String message) throws GeneralSecurityException {
         try {
