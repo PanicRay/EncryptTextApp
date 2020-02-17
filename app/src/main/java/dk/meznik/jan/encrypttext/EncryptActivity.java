@@ -1,19 +1,15 @@
 package dk.meznik.jan.encrypttext;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import dk.meznik.jan.encrypttext.util.Encryption;
@@ -25,18 +21,20 @@ public class EncryptActivity extends Activity {
     Button buttonEncrypt;
     Button buttonDecrypt;
     Button buttonReplace;
+    Switch useDefault;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encrypt);
 
-        editTextPassword = (EditText)findViewById(R.id.editTextPassword);
+        editTextPassword = (EditText)findViewById(R.id.switch2);
         editText1 = (EditText)findViewById(R.id.editText1);
         editText2 = (EditText)findViewById(R.id.editText2);
         buttonEncrypt = (Button)findViewById(R.id.buttonEncrypt);
         buttonDecrypt = (Button)findViewById(R.id.buttonDecrypt);
         buttonReplace = (Button)findViewById(R.id.buttonReplace);
+        useDefault = (Switch)findViewById(R.id.switch2);
         buttonReplace.setEnabled(false);
 
 
@@ -65,12 +63,26 @@ public class EncryptActivity extends Activity {
         finish();
     }
 
+    public void buttonOnDefault(View v) {
+        if (useDefault.isChecked()) {
+            editTextPassword.setFocusable(false);
+        }
+        else {
+            editTextPassword.setFocusable(true);
+        }
+    }
+
     public void buttonEncryptClick(View v) {
         String password = editTextPassword.getText().toString();
         String str = editText1.getText().toString();
         String cipher = "";
         try {
-            cipher = Encryption.encrypt(password, MainActivity.version+str);
+            if (useDefault.isChecked()) {
+                cipher = Encryption.encryptDefault(MainActivity.version+str);
+            }
+            else {
+                cipher = Encryption.encrypt(password, MainActivity.version + str);
+            }
         } catch (Exception ex) {
             Toast.makeText(this, "Could not encrypt text: " + ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -82,7 +94,12 @@ public class EncryptActivity extends Activity {
         String str = editText1.getText().toString();
         String plain = "";
         try {
-            plain = Encryption.decrypt(password, str);
+            if (useDefault.isChecked()) {
+                plain = Encryption.decryptDefault(str);
+            }
+            else {
+                plain = Encryption.decrypt(password, str);
+            }
         } catch (Exception ex) {
             Toast.makeText(this, "Unable to decipher text.", Toast.LENGTH_SHORT).show();
         }

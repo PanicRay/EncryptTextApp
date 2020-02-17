@@ -53,53 +53,12 @@ public class Encryption {
         return new SecretKeySpec(key, "AES");
     }
 
-    public boolean isExternalStorageWritable() {
-        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            Log.i("State", "Yes, it is writable!");
-            return true;
-        }
-        return false;
+    public static String encryptDefault(String message) throws GeneralSecurityException {
+        return encrypt(SALT2, message);
     }
 
-    public String[] readPassbook(String fileName) {
-        if (isExternalStorageWritable()) {
-            File textFile = new File(Environment.getExternalStorageDirectory(), fileName.getText().toString());
-            byte[] data = new byte[10240];
-            String passcode = "";
-            try {
-                BufferedInputStream buf = new BufferedInputStream(new FileInputStream(textFile));
-                buf.read(data, 0, data.length);
-                buf.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                passcode = decrypt(SALT2, data.toString());
-            } catch (Exception e) {
-                Toast.makeText(this, "Could not encrypt text: " + ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-            return passcode.split("\n");
-        }
-        return null;
-    }
-
-    public void writePassbook(String fileName, String [] passbook, String password){
-        if (isExternalStorageWritable()) {
-            File textFile = new File(Environment.getExternalStorageDirectory(), fileName);
-            try {
-                FileOutputStream fos = new FileOutputStream(textFile);
-                for (String i : passbook) {
-                    fos.write(encrypt(SALT2, i.getBytes()));
-                }
-                fos.write()
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public static String decryptDefault(String message) throws GeneralSecurityException {
+        return decrypt(SALT2, message);
     }
 
     public static String encrypt(final String password, String message) throws GeneralSecurityException {
