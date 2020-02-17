@@ -17,3 +17,4 @@ application.
 
 由于微信屏蔽了所有的对它App内部的替换，唯一可以做的就是再粘贴一遍。
 
+有兴趣的可以关注https://t.me/KeepAssSafe
